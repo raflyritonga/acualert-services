@@ -1,21 +1,79 @@
-const { storeDb, firestoreDb } = require('../config')
+const { firestoreDb } = require('../config')
 
-// GETTING ALL CARS DATA
-const allVehicles = async(req, res, next) => {
-     // const vehiclesType = req.params.type
-     const VehiclesReff = firestoreDb.collection('vehicles').doc('cars')
-     VehiclesReff.get()
-     .then((doc) => {
-       if (doc.exists) {
-         const specificProduct = doc.data()
-         return res.status(200).json(specificProduct)
-     } else {
-          return res.status(404).json('Not Found')
+// GETTING ALL VEHICLES BY THE VEHICLE TYPE
+const vehiclesByVehicleType = async (req, res, next) => {
+     const vehicleType = req.params.vehicleType
+     const vehiclesByTypeReff = firestoreDb.collection('vehicles').doc(`${vehicleType}`)
+   
+     try {
+          const doc = await vehiclesByTypeReff.get()
+
+          if (doc.exists) {
+            const vehiclesData  = doc.data()
+            return res.status(200).json(vehiclesData)
+          } else {
+            return res.status(404).json('Not Found')
+          }
+     } catch (error) {
+          return res.status(500).json({ error: 'Internal Server Error' })
+     }  
+}
+
+// ADD VEHICLES TO USER COLLECTION
+const vehicleRegistration = async (req, res, next) => {
+     const newVehicle = {
+       userId: req.body.userId,
+       vehicleType: req.body.vehicleType,
+       vehicleMapName: req.body.vehicle
+     };
+   
+     try {
+       // Check if the vehicle exists in the "vehicles" collection
+       const vehicleRef = firestoreDb.collection('vehicles').doc(newVehicle.vehicleType);
+       const vehicleDoc = await vehicleRef.get();
+   
+       if (!vehicleDoc.exists) {
+         return res.status(404).json('Vehicle not found');
+       }
+   
+       const vehicleData = vehicleDoc.data();
+       let vehicleDetails;
+   
+       if (vehicleData && vehicleData[newVehicle.vehicleMapName]) {
+         vehicleDetails = vehicleData[newVehicle.vehicleMapName];
+       } else {
+         return res.status(404).json('Vehicle details not found');
+       }
+   
+       // Check if the user exists in the "users" collection
+       const userRef = firestoreDb.collection('users').doc(newVehicle.userId);
+       const userDoc = await userRef.get();
+   
+       if (!userDoc.exists) {
+         return res.status(404).json('User not found');
+       }
+   
+       const userData = userDoc.data();
+       const userVehicles = userData.vehicles || {};
+   
+       if (userVehicles[newVehicle.vehicleMapName]) {
+         return res.status(404).json('Vehicle already exists');
+       }
+   
+       // Add the new vehicle to the user's vehicles map
+       userVehicles[newVehicle.vehicleMapName] = vehicleDetails;
+   
+       // Update the user's document with the new vehicles data
+       await userRef.update({
+         vehicles: userVehicles
+       });
+   
+       return res.status(200).json('Vehicle registration succeeded');
+     } catch (err) {
+       console.error(err); // Log the error for debugging
+       return res.status(500).json(`message: ${err.message}`);
      }
-})
-     .catch((error) => {
-          return res.status(404).json(error)
-     });
-} 
+   };   
 
-module.exports = {allVehicles}
+
+module.exports = {vehiclesByVehicleType, vehicleRegistration}
