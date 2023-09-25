@@ -73,7 +73,60 @@ const vehicleRegistration = async (req, res, next) => {
        console.error(err); // Log the error for debugging
        return res.status(500).json(`message: ${err.message}`);
      }
-   };   
+} 
 
 
-module.exports = {vehiclesByVehicleType, vehicleRegistration}
+// DELETE VEHICLE
+const deleteVehicle = async (req, res, next) => {
+     const deletingVehicle = {
+          userId: req.body.userId,
+          vehicleMapName: req.body.vehicle
+     }
+     
+     try {
+          // Check if the user exists in the "users" collection
+          const userRef = firestoreDb.collection('users').doc(deletingVehicle.userId)
+          const userDoc = await userRef.get()
+     
+          if (!userDoc.exists) {
+          return res.status(404).json({error: 'User not found'})
+          }
+     
+          const userData = userDoc.data()
+          const userVehicles = userData.vehicles || {}
+     
+          if (!userVehicles[deletingVehicle.vehicleMapName]) {
+               return res.status(404).json({error: 'Vehicle not found'})
+          } else{
+               // Remove the vehicle from the user's vehicles
+               delete userVehicles[deletingVehicle.vehicleMapName];
+
+               // Update the user's document without the deleted vehicle
+               await userRef.update({
+                    vehicles: userVehicles
+               });
+               
+               return res.status(200).json('Vehicle deleted successfully');
+          }          
+     } catch (err) {
+          return res.status(500).json(`message: ${err.message}`);
+     }
+}
+
+const customHeight = (req, res, next) => {
+     const userId = req.params.userId
+     const editedHieght = req.body.height
+
+     try {
+
+
+          
+          
+     } catch (err) {
+          return res.status(500).json(`message: ${err.message}`);
+     }
+
+
+}
+
+module.exports = {vehiclesByVehicleType, vehicleRegistration, deleteVehicle}
