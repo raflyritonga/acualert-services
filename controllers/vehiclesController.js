@@ -113,20 +113,43 @@ const deleteVehicle = async (req, res, next) => {
      }
 }
 
-const customHeight = (req, res, next) => {
-     const userId = req.params.userId
-     const editedHieght = req.body.height
+const customHeight = async (req, res, next) => {
+
+     const dataUpdation = {
+          userId : req.body.userId,
+          vehicleMapName : req.body.vehicle,
+          editedGroundClearance : req.body.groundClearance
+     }
 
      try {
+          // Check if the user exists in the "users" collection
+          const userRef = firestoreDb.collection('users').doc(dataUpdation.userId)
+          const userDoc = await userRef.get()
+               
+          if (!userDoc.exists) {
+               return res.status(404).json({error: 'User not found'})
+          }
 
+          // check if user has the vehicle
+          const userData = userDoc.data()
+          const userVehicles = userData.vehicles || {}
+     
+          if (!userVehicles[dataUpdation.vehicleMapName]) {
+               // console.log(userVehicles[dataUpdation.vehicleMapName])
+               return res.status(404).json({error: 'Vehicle not found'})
+          } else{
+               // Update the height of the specified vehicle
+               const updatedUserVehicles = { ...userVehicles }
+               updatedUserVehicles[dataUpdation.vehicleMapName]['ground-clearance'] = dataUpdation.editedGroundClearance
 
-          
-          
+               await userRef.update({ vehicles: updatedUserVehicles })
+
+               return res.status(200).json({ message: 'Vehicle height updated successfully' });
+          }
      } catch (err) {
           return res.status(500).json(`message: ${err.message}`);
      }
 
-
 }
 
-module.exports = {vehiclesByVehicleType, vehicleRegistration, deleteVehicle}
+module.exports = {vehiclesByVehicleType, vehicleRegistration, deleteVehicle, customHeight}

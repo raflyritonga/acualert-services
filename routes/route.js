@@ -4,9 +4,10 @@ const router = express.Router();
 const BASE_PATH = process.env.BASE_PATH
 
 const {signUp, signIn, signOut} = require('../controllers/authController')
-const {vehiclesByVehicleType, vehicleRegistration, deleteVehicle} = require('../controllers/vehiclesController')
+const {vehiclesByVehicleType, vehicleRegistration, deleteVehicle, customHeight} = require('../controllers/vehiclesController')
 const {vehiclesByUserId} = require('../controllers/homeController')
-const updateProfile = require('../controllers/profileController')
+const updateProfile = require('../controllers/profileController');
+const { fetchWaterLevelData } = require('../controllers/iotController');
 
 router.get(BASE_PATH, (_req, res) => {
      res.send('Welcome to Acualert API Services');
@@ -35,5 +36,11 @@ router.delete(BASE_PATH + '/vehicle-deletion', deleteVehicle);
 
 // Get all user's vehicles on the home screen
 router.get(BASE_PATH + '/home/:userId', vehiclesByUserId);
+
+// Update the height to the custom one
+router.put(BASE_PATH + '/vehicles/custom-height', customHeight);
+
+// Fetch water level data
+router.get(BASE_PATH + '/iot/water-level', fetchWaterLevelData);
 
 module.exports = router;
