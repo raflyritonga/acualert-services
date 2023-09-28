@@ -14,6 +14,7 @@ const signUp = async (req, res) =>{
   };
 
   try {
+      console.log(user)
     // Check if the email already exists in the "accounts" collection
     const emailQuerySnapshot = await firestoreDb
     .collection('accounts')
