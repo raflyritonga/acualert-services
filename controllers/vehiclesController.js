@@ -10,7 +10,7 @@ const vehiclesByVehicleType = async (req, res, next) => {
 
           if (doc.exists) {
             const vehiclesData  = doc.data()
-            console.log('request succeed')
+            console.log(vehiclesData)
             return res.status(200).json(vehiclesData)
           } else {
             return res.status(404).json('Not Found')

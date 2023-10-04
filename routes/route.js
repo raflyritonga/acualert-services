@@ -5,7 +5,7 @@ const BASE_PATH = process.env.BASE_PATH
 
 const {signUp, signIn, signOut} = require('../controllers/authController')
 const {vehiclesByVehicleType, vehicleRegistration, deleteVehicle, customGroundClearance} = require('../controllers/vehiclesController')
-const {vehiclesByUserId} = require('../controllers/homeController')
+const {vehiclesByUserId, userDataByUserId} = require('../controllers/homeController')
 const updateProfile = require('../controllers/profileController');
 const { fetchWaterLevelData } = require('../controllers/iotController');
 
@@ -42,5 +42,8 @@ router.put(BASE_PATH + '/vehicles/custom-ground-clearance', customGroundClearanc
 
 // Fetch water level data
 router.get(BASE_PATH + '/iot/water-level', fetchWaterLevelData);
+
+// Fetch user data
+router.get(BASE_PATH + '/home/user/:userId', userDataByUserId);
 
 module.exports = router;

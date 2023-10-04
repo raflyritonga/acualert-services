@@ -21,4 +21,24 @@ const vehiclesByUserId = async (req, res, next) => {
      }  
 }
 
-module.exports = {vehiclesByUserId}
+const userDataByUserId = async (req, res, next) => {
+     const userId = req.params.userId
+     
+     try {
+          const userDataRef = firestoreDb.collection('users').doc(userId)
+          const userDataDoc = await userDataRef.get()
+          
+          if (!userDataDoc.exists) {
+               return res.status(404).json({error: 'User not found'})
+          }
+          
+          const userData = userDataDoc.data()
+          console.log(userData)
+          return res.status(200).json(userData)
+
+     } catch (err) {
+          return res.status(500).json({ error: `message: ${err.message}` })
+     }  
+}
+
+module.exports = {vehiclesByUserId, userDataByUserId}
