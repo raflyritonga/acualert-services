@@ -10,6 +10,7 @@ const vehiclesByVehicleType = async (req, res, next) => {
 
           if (doc.exists) {
             const vehiclesData  = doc.data()
+            console.log('request succeed')
             return res.status(200).json(vehiclesData)
           } else {
             return res.status(404).json('Not Found')
@@ -113,7 +114,7 @@ const deleteVehicle = async (req, res, next) => {
      }
 }
 
-const customHeight = async (req, res, next) => {
+const customGroundClearance = async (req, res, next) => {
 
      const dataUpdation = {
           userId : req.body.userId,
@@ -152,4 +153,4 @@ const customHeight = async (req, res, next) => {
 
 }
 
-module.exports = {vehiclesByVehicleType, vehicleRegistration, deleteVehicle, customHeight}
+module.exports = {vehiclesByVehicleType, vehicleRegistration, deleteVehicle, customGroundClearance}

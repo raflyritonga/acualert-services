@@ -14,7 +14,7 @@ const signUp = async (req, res) =>{
   };
 
   try {
-      console.log(user)
+    console.log(user)
     // Check if the email already exists in the "accounts" collection
     const emailQuerySnapshot = await firestoreDb
     .collection('accounts')
@@ -57,6 +57,7 @@ const signIn = async (req, res) => {
   };
 
   try {
+    console.log(account)
     // Query the Firestore collection for the user with the provided email
     const emailQuerySnapshot = await firestoreDb
       .collection('accounts')
@@ -81,8 +82,8 @@ const signIn = async (req, res) => {
       let tokenData = {id: userId, email: userData.email}
       const expiresIn = 60 * 60 * 24 * 30; // 30 days
       const accessToken =  await generateToken(tokenData, SECRET_KEY, expiresIn)
-
-      return res.status(200).json(`Token: ${accessToken}`);
+      console.log(accessToken)
+      return res.status(200).json(accessToken);
     } else {
       return res.status(400).json('Password is wrong');
     }

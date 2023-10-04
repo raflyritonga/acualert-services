@@ -4,7 +4,7 @@ const router = express.Router();
 const BASE_PATH = process.env.BASE_PATH
 
 const {signUp, signIn, signOut} = require('../controllers/authController')
-const {vehiclesByVehicleType, vehicleRegistration, deleteVehicle, customHeight} = require('../controllers/vehiclesController')
+const {vehiclesByVehicleType, vehicleRegistration, deleteVehicle, customGroundClearance} = require('../controllers/vehiclesController')
 const {vehiclesByUserId} = require('../controllers/homeController')
 const updateProfile = require('../controllers/profileController');
 const { fetchWaterLevelData } = require('../controllers/iotController');
@@ -38,7 +38,7 @@ router.delete(BASE_PATH + '/vehicle-deletion', deleteVehicle);
 router.get(BASE_PATH + '/home/:userId', vehiclesByUserId);
 
 // Update the height to the custom one
-router.put(BASE_PATH + '/vehicles/custom-height', customHeight);
+router.put(BASE_PATH + '/vehicles/custom-ground-clearance', customGroundClearance);
 
 // Fetch water level data
 router.get(BASE_PATH + '/iot/water-level', fetchWaterLevelData);
