@@ -9,7 +9,7 @@ const {vehiclesByUserId, userDataByUserId} = require('../controllers/homeControl
 const updateProfile = require('../controllers/profileController');
 const { fetchWaterLevelData } = require('../controllers/iotController');
 
-router.get(BASE_PATH, (_req, res) => {
+router.get("/services", (_req, res) => {
      res.send('Welcome to Acualert API Services');
 });
 
