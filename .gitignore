@@ -3,5 +3,4 @@ node_modules
 creds.json
 package-lock.json
 vehicles
-firebase-credential.json
 test.rest
