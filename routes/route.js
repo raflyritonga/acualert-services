@@ -7,7 +7,7 @@ const {signUp, signIn, signOut} = require('../controllers/authController')
 const {vehiclesByVehicleType, vehicleRegistration, deleteVehicle, customGroundClearance} = require('../controllers/vehiclesController')
 const {vehiclesByUserId, userDataByUserId} = require('../controllers/homeController')
 const updateProfile = require('../controllers/profileController');
-const { fetchWaterLevelData } = require('../controllers/iotController');
+const { fetchWaterLevelData, fetchLat, fetchLong } = require('../controllers/iotController');
 
 router.get(BASE_PATH, (_req, res) => {
      res.send('Welcome to Acualert API Services');
@@ -42,6 +42,12 @@ router.put(BASE_PATH + '/vehicles/custom-ground-clearance', customGroundClearanc
 
 // Fetch water level data
 router.get(BASE_PATH + '/iot/water-level', fetchWaterLevelData);
+
+// Fetch water level data
+router.get(BASE_PATH + '/iot/lat1', fetchLat);
+
+// Fetch water level data
+router.get(BASE_PATH + '/iot/long1', fetchLong);
 
 // Fetch user data
 router.get(BASE_PATH + '/home/user/:userId', userDataByUserId);
