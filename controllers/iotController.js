@@ -1,6 +1,6 @@
 const axios = require('axios');
-const ACCESS_TOKEN = process.env.BLYNK_API_TOKEN
-const BASE_URL = process.env.BASE_BLYNK_API_URL
+const ACCESS_TOKEN = 'OoZkFmQ_eiBwv7r-23Mreou0glgWfgi0&'
+const BASE_URL = 'https://sgp1.blynk.cloud/external/api/get?token='
 
 // FETCHING WATER LEVEL REAL TIME DATA FROM BLYNK'S API
 const fetchWaterLevelData = async (_req, res) => {
