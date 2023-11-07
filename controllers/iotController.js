@@ -8,9 +8,13 @@ const fetchWaterLevelData = async (_req, res) => {
      try {
           const response = await axios.get(url);
           console.log('Water Level Data:', response.data); // Log the data
+          console.log(BASE_URL);
+          console.log(ACCESS_TOKEN);
           return res.status(200).json(response.data);
      } catch (err) {
           console.error('Error fetching water level data:', err); // Log the error
+          console.log(BASE_URL);
+          console.log(ACCESS_TOKEN);
           return res.status(500).json({ message: err.message });
      }
 };
