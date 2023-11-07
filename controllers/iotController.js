@@ -4,7 +4,7 @@ const BASE_URL = process.env.BASE_BLYNK_API_URL
 
 // FETCHING WATER LEVEL REAL TIME DATA FROM BLYNK'S API
 const fetchWaterLevelData = async (_req, res) => {
-     const url = BASE_URL + ACCESS_TOKEN;
+     const url = BASE_URL + ACCESS_TOKEN + 'v2';
      try {
           const response = await axios.get(url);
           console.log('Water Level Data:', response.data); // Log the data
@@ -19,7 +19,12 @@ const fetchWaterLevelData = async (_req, res) => {
 const fetchLat = async (_req, res) => {
      const url = BASE_URL + ACCESS_TOKEN + 'v3';
      try {
-          const response = await axios.get(url);
+          const response = await axios({
+               headers: { Accept: 'application/json' },
+               proxy: false,
+               url: url,
+               method: 'get'
+          });
           console.log('Latitude:', response.data); // Log the data
           return res.status(200).json(response.data);
      } catch (err) {
