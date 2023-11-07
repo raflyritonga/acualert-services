@@ -43,10 +43,10 @@ router.put(BASE_PATH + '/vehicles/custom-ground-clearance', customGroundClearanc
 // Fetch water level data
 router.get(BASE_PATH + '/iot/water-level', fetchWaterLevelData);
 
-// Fetch water level data
+// Fetch lat obstacle
 router.get(BASE_PATH + '/iot/lat1', fetchLat);
 
-// Fetch water level data
+// Fetch long obstacle
 router.get(BASE_PATH + '/iot/long1', fetchLong);
 
 // Fetch user data
