@@ -17,7 +17,7 @@ const fetchWaterLevelData = async (_req, res) => {
 
 // FETCHING LATITUDE
 const fetchLat = async (_req, res) => {
-     const url = BASE_URL + ACCESS_TOKEN + 'v6';
+     const url = BASE_URL + ACCESS_TOKEN + 'v3';
      try {
           const response = await axios({
                headers: { Accept: 'application/json' },
@@ -35,7 +35,7 @@ const fetchLat = async (_req, res) => {
 
 // FETCHING LONGITUDE
 const fetchLong = async (_req, res) => {
-     const url = BASE_URL + ACCESS_TOKEN + 'v7';
+     const url = BASE_URL + ACCESS_TOKEN + 'v4';
      try {
           const response = await axios.get(url);
           console.log('Longitude:', response.data); // Log the data
