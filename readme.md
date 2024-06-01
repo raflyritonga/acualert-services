@@ -9,14 +9,14 @@
 
 ##### Signin
 
-```http
+```
   POST /services/signin
 ```
 
 ##### Signout
 
 ```http
-  POST /services/signouT
+  POST /services/signout
 ```
 
 ##### Update Profile
