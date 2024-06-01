@@ -1,9 +1,12 @@
+# Acualert Services
+
+Acualert Services is a backend API designed to support the Acualert app, which functions as a real-time flood warning system. The primary objective of Acualert Services is to provide reliable and timely data processing, management, and distribution to ensure that users receive accurate flood warnings and updates.
 
 ## API Reference
 
 ##### Signup
 
-```http
+```
   POST /services/signup
 ```
 
@@ -15,65 +18,65 @@
 
 ##### Signout
 
-```http
+```
   POST /services/signout
 ```
 
 ##### Update Profile
 
-```http
+```
   PUT /services/profile/update/:userId
 ```
 
 ##### Get all vehicle data by the vehicle type
 
-```http
+```
   GET /services/vehicles/:vehicleType
 ```
 
 ##### Register new vehicle
 
-```http
+```
   PUT /services/vehicles/:vehicleType
 ```
 
 ##### Delete a vehicle
 
-```http
+```
   DELETE /services/vehicle-deletion
 ```
 
 ##### Get all user's vehicles on the home screen based on userId
 
-```http
+```
   GET /services/home/:userId
 ```
 
 ##### Update the height to the custom one
 
-```http
+```
   PUT /services/vehicles/custom-ground-clearance
 ```
 
 ##### Get water level data
 
-```http
+```
   GET /services/iot/water-level
 ```
 
 ##### Get the obstacle
 
 - Latitude
-  ```http
+  ```
     GET /services/iot/lat1
   ```
 - Longitude
-  ```http
+  ```
     GET /services/iot/long1
   ```
 
 ##### Get user data by userId
 
-```http
+```
   GET /services/home/user/:userId
 ```
